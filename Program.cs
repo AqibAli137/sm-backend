@@ -18,6 +18,7 @@ builder.Services.AddDbContext<SmContext>(opt =>
 
 // Repository Dependencies
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
 var app = builder.Build();
 

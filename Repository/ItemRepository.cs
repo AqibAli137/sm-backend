@@ -1,4 +1,5 @@
-﻿using sm_backend.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using sm_backend.Models;
 using sm_backend.Repository.Interfaces;
 
 namespace sm_backend.Repository
@@ -11,24 +12,36 @@ namespace sm_backend.Repository
             _dbContext = dbContext;
         }
 
-        public Task<List<Item>> GetAllItemAsync()
+        public async Task<List<Item>> GetAllItemAsync()
         {
-            throw new NotImplementedException();
+            return await _dbContext.Item.ToListAsync();
         }
 
-        public Task<Item> GetItemAsync(int id)
+        public async Task<Item> GetItemAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _dbContext.Item.Where(x => x.Id == id).FirstOrDefaultAsync();
         }
 
-        public Task<Item> PostItemAsync(Item item)
+        public async Task<Item> PostItemAsync(Item item)
         {
-            throw new NotImplementedException();
+            _dbContext.Item.Add(item);
+            await _dbContext.SaveChangesAsync();
+            return item;
         }
 
-        public Task<Item> PutItemAsync(Item item)
+        public async Task<Item> PutItemAsync(Item item)
         {
-            throw new NotImplementedException();
+            var itm = _dbContext.Item.Where(x => x.Id == item.Id).FirstOrDefault();
+            if(itm != null)
+            {
+                itm.ItemName = item.ItemName;
+                itm.CostOfItem = item.CostOfItem;
+                itm.TotalQuantity = item.TotalQuantity;
+                itm.TotalAmount = item.TotalAmount;
+                itm.TypeOfItem = item.TypeOfItem;
+            }
+            await _dbContext.SaveChangesAsync();
+            return itm;
         }
     }
 }
