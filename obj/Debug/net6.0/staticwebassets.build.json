@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "Vs3vz4NL91r87BztZWb14ERr1oD+sSKD2KD+qg2MBhU=",
+  "Source": "sm_backend",
+  "BasePath": "_content/sm_backend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
