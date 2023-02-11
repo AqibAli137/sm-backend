@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "F:\\Marbel_Shop\\sm_backend\\sm_backend.csproj": {}
+    "E:\\Aqib proj\\sm-backend\\sm_backend.csproj": {}
   },
   "projects": {
-    "F:\\Marbel_Shop\\sm_backend\\sm_backend.csproj": {
+    "E:\\Aqib proj\\sm-backend\\sm_backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Marbel_Shop\\sm_backend\\sm_backend.csproj",
+        "projectUniqueName": "E:\\Aqib proj\\sm-backend\\sm_backend.csproj",
         "projectName": "sm_backend",
-        "projectPath": "F:\\Marbel_Shop\\sm_backend\\sm_backend.csproj",
-        "packagesPath": "C:\\Users\\dell\\.nuget\\packages\\",
-        "outputPath": "F:\\Marbel_Shop\\sm_backend\\obj\\",
+        "projectPath": "E:\\Aqib proj\\sm-backend\\sm_backend.csproj",
+        "packagesPath": "C:\\Users\\Home\\.nuget\\packages\\",
+        "outputPath": "E:\\Aqib proj\\sm-backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\dell\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Home\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -62,7 +64,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
