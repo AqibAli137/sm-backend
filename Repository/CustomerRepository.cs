@@ -42,8 +42,8 @@ namespace sm_backend.Repository
                 cust.PaymentRcv = customer.PaymentRcv;
                 cust.PendingPayment = customer.PendingPayment;
             }
-            await _dbContext.SaveChangesAsync();
-            return cust;
+            await _dbContext.SaveChangesAsync();        
+            return customer;
         }
     }
 }

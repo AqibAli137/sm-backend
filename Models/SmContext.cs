@@ -11,7 +11,7 @@ namespace sm_backend.Models
         }
         public DbSet<Customer> Customer { get; set; }
         public DbSet<CustomerOrder> CustomerOrders { get; set; }
-        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<Invoice> Invoice { get; set; }
         public DbSet<Item> Item { get; set; }
     }
 }
