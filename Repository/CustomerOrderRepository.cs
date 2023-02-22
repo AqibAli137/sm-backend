@@ -40,8 +40,10 @@ namespace sm_backend.Repository
                 data.CustomerId = order.CustomerId;
                 data.ItemName = order.ItemName;
                 data.ItemQuantity = order.ItemQuantity;
-                data.OrderDate = order.OrderDate = DateTime.Now;
+                data.OrderDate = order.OrderDate;
                 data.SetPrice = order.SetPrice;
+                data.GatePassNumber = order.GatePassNumber;
+                data.Profit = order.Profit;
             }
             await _dbContext.SaveChangesAsync();
             return order;

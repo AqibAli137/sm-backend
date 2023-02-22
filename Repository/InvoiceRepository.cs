@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using sm_backend.Models;
+﻿using sm_backend.Models;
+using Microsoft.EntityFrameworkCore;
 using sm_backend.Repository.Interfaces;
 
 namespace sm_backend.Repository

@@ -21,6 +21,7 @@ builder.Services.AddScoped<IItemRepository, ItemRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<ICustomerOrderRepository, CustomerOrderRepository>();
 builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+builder.Services.AddScoped<IGatePassRepository, GatePassRepository>();
 
 var app = builder.Build();
 
