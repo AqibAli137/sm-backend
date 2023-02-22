@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using sm_backend.Models;
+﻿using sm_backend.Models;
+using Microsoft.EntityFrameworkCore;
 using sm_backend.Repository.Interfaces;
 
 namespace sm_backend.Repository
@@ -41,6 +41,7 @@ namespace sm_backend.Repository
                 cust.IsActive = customer.IsActive;
                 cust.PaymentRcv = customer.PaymentRcv;
                 cust.PendingPayment = customer.PendingPayment;
+                cust.TotalBill = customer.TotalBill;
             }
             await _dbContext.SaveChangesAsync();        
             return customer;

@@ -25,13 +25,17 @@ namespace sm_backend.Controllers
 
         [HttpPost]
         public async Task<IActionResult> PostCustomerOrder(CustomerOrder order)
-        {
-            CustomerOrder ordr = await _customerOrderRepository.PostCustomerOrderAsync(order);
-            if(ordr != null)
+            {
+            try
+            {
+                 CustomerOrder ordr = await _customerOrderRepository.PostCustomerOrderAsync(order);
+
+                 return Ok(ordr);
+            }
+            catch(System.Exception)
             {
                 return BadRequest("Customer Order Not Found");
             }
-            return Ok(ordr);
         }
 
         [HttpPut]

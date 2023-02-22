@@ -11,8 +11,10 @@ namespace sm_backend.Models
         public int CustomerId { get; set; }
         public string? ItemName { get; set; }
         public int ItemQuantity { get; set; }
-        public DateTime OrderDate { get; set; } = DateTime.UtcNow;
+        public string OrderDate { get; set; }
         public decimal SetPrice { get; set; }
         public decimal Yourbill { get; set; }
+        public int GatePassNumber { get; set; }
+        public decimal Profit { get; set; }
     }
 }
