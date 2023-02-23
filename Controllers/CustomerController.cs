@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using sm_backend.Models;
-using sm_backend.Repository;
 using sm_backend.Repository.Interfaces;
 
 namespace sm_backend.Controllers

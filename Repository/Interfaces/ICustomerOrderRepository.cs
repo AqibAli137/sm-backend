@@ -8,5 +8,6 @@ namespace sm_backend.Repository.Interfaces
         Task<CustomerOrder> GetCustomerOrderAsync(int id);
         Task<CustomerOrder> PostCustomerOrderAsync(CustomerOrder oder);
         Task<CustomerOrder> PutCustomerOrderAsync(CustomerOrder order);
+        Task<CustomerOrder> NewOrder(CustomerOrder order);
     }
 }

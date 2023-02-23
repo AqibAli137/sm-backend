@@ -32,11 +32,12 @@ namespace sm_backend.Repository
         public async Task<Item> PutItemAsync(Item item)
         {
             var itm = _dbContext.Item.Where(x => x.Id == item.Id).FirstOrDefault();
-            if(itm != null)
+
+            if (itm != null)
             {
                 itm.ItemName = item.ItemName;
                 itm.CostOfItem = item.CostOfItem;
-                itm.TotalQuantity = item.TotalQuantity;
+                itm.TotalQuantity += item.TotalQuantity;
                 itm.TotalAmount = item.TotalAmount;
                 itm.TypeOfItem = item.TypeOfItem;
             }

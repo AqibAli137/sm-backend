@@ -44,5 +44,13 @@ namespace sm_backend.Controllers
         {
             return await _customerOrderRepository.PutCustomerOrderAsync(order);
         }
+
+
+        [HttpPost]
+        [Route("NewOrder")]
+        public async Task<CustomerOrder> NewOrder(CustomerOrder order)
+        {
+            return await _customerOrderRepository.NewOrder(order);
+        }
     }
 }

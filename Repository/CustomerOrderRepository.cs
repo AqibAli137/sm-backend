@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using sm_backend.Models;
+﻿using sm_backend.Models;
+using Microsoft.EntityFrameworkCore;
 using sm_backend.Repository.Interfaces;
 
 namespace sm_backend.Repository
@@ -21,6 +21,21 @@ namespace sm_backend.Repository
         public async Task<CustomerOrder> GetCustomerOrderAsync(int id)
         {
             return await _dbContext.CustomerOrders.Where(s => s.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<CustomerOrder> NewOrder(CustomerOrder order)
+        {
+            GatePass gatePass = new GatePass();
+            gatePass.GatePassDate = order.OrderDate;
+            _dbContext.GatePass.Add(gatePass);
+            /*_dbContext.CustomerOrders.Add(order)*/
+
+            var gatePassNumber =  _dbContext.GatePass.ToListAsync();
+
+            _dbContext.Add(gatePassNumber);
+            await _dbContext.SaveChangesAsync();
+            return order;
+
         }
 
         public async Task<CustomerOrder> PostCustomerOrderAsync(CustomerOrder oder)
