@@ -13,6 +13,5 @@ namespace sm_backend.Models
         public int PaymentRcv { get; set; }
         public int PendingPayment { get; set; }
         public decimal TotalBill { get; set; }
-        public List<CustomerOrder> CustomerOrders { get; set; }
     }
 }
