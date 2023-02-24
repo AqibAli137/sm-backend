@@ -10,8 +10,8 @@ namespace sm_backend.Models
         public string? Address { get; set; }
         public string? PhoneNo { get; set; }
         public bool IsActive { get; set; }
-        public int PaymentRcv { get; set; }
-        public int PendingPayment { get; set; }
-        public int TotalBill { get; set; }
+        public decimal PaymentRcv { get; set; }
+        public decimal PendingPayment { get; set; }
+        public decimal TotalBill { get; set; }
     }
 }

@@ -26,38 +26,61 @@ namespace sm_backend.Repository
 
         private string RendomNumber()
         {
-             var random = new Random();
-            var value = random.Next();
-            string startTime = "15/04/1999";
-            var againRendom=new Random();
-            var againValue= againRendom.Next();
+            var random = new Random();
+            var value = random.Next(1,999999);
+            string startTime = "4/15/1999";
+            var againValue = random.Next(4000, 1000000);
             var seconds = (DateTime.Now - DateTime.Parse(startTime)).TotalSeconds;
-            var gatePassNumber = Convert.ToInt32(seconds % 100000000) + value + againValue;
+            var gatePassNumber = Convert.ToInt32(seconds % random.Next(0, 1000)) + value + againValue;
             return gatePassNumber.ToString();
         }
 
-        public async Task<CustomerOrder> NewOrder(List<CustomerOrder> orderList)
+        private async Task<Item> getItemRecord(int itemId)
         {
-          string rendomNo= RendomNumber();
+            var Itemrecord = await _dbContext.Item.Where(s => s.Id == itemId).FirstOrDefaultAsync();
+
+            return Itemrecord;
+        }
+
+        private async Task<Customer> getCustomerRecord(int CustomerId)
+        {
+            var Customerrecord = await _dbContext.Customer.Where(s => s.Id == CustomerId).FirstOrDefaultAsync();
+
+            return Customerrecord;
+        }
+
+        public async Task<CustomerOrder> NewOrder(int customerId,List<CustomerOrder> orderList)
+        {
+            string rendomNo = RendomNumber();
 
             GatePass gatePass = new GatePass();
+            gatePass.CustomerId= customerId;
             gatePass.GatePassDate = DateTime.UtcNow.ToString();
-            gatePass.GatePassNo=rendomNo;
+            gatePass.GatePassNo = rendomNo;
             _dbContext.GatePass.Add(gatePass);
 
             foreach (var order in orderList)
             {
-            order.GatePassNumber=rendomNo;
-            _dbContext.CustomerOrders.Add(order);
-            }
-            await _dbContext.SaveChangesAsync();
-           
-           
-            return orderList[1];
+                order.GatePassNumber = rendomNo;
+               Item itemRecord =await _dbContext.Item.Where(s => s.Id == order.ItemId).FirstOrDefaultAsync();
+               Customer customerRecord=await  _dbContext.Customer.Where(s => s.Id == order.CustomerId).FirstOrDefaultAsync();
 
+               order.ItemName=itemRecord.ItemName;
+               order.OrderDate=DateTime.UtcNow.ToString();
+                _dbContext.CustomerOrders.Add(order);
+
+
+               itemRecord.TotalQuantity -= order.ItemQuantity;
+
+
+               customerRecord.TotalBill += order.Yourbill;
+            }
+
+            await _dbContext.SaveChangesAsync();
+            return orderList[0];
         }
 
-        
+
 
         public async Task<CustomerOrder> PostCustomerOrderAsync(CustomerOrder oder)
         {
