@@ -35,19 +35,19 @@ namespace sm_backend.Repository
             return gatePassNumber.ToString();
         }
 
-        private async Task<Item> getItemRecord(int itemId)
-        {
-            var Itemrecord = await _dbContext.Item.Where(s => s.Id == itemId).FirstOrDefaultAsync();
+        // private async Task<Item> getItemRecord(int itemId)
+        // {
+        //     var Itemrecord = await _dbContext.Item.Where(s => s.Id == itemId).FirstOrDefaultAsync();
 
-            return Itemrecord;
-        }
+        //     return Itemrecord;
+        // }
 
-        private async Task<Customer> getCustomerRecord(int CustomerId)
-        {
-            var Customerrecord = await _dbContext.Customer.Where(s => s.Id == CustomerId).FirstOrDefaultAsync();
+        // private async Task<Customer> getCustomerRecord(int CustomerId)
+        // {
+        //     var Customerrecord = await _dbContext.Customer.Where(s => s.Id == CustomerId).FirstOrDefaultAsync();
 
-            return Customerrecord;
-        }
+        //     return Customerrecord;
+        // }
 
         public async Task<CustomerOrder> NewOrder(int customerId,List<CustomerOrder> orderList)
         {
