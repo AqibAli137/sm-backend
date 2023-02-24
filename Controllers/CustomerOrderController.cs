@@ -48,7 +48,7 @@ namespace sm_backend.Controllers
 
         [HttpPost]
         [Route("NewOrder")]
-        public async Task<CustomerOrder> NewOrder(CustomerOrder order)
+        public async Task<CustomerOrder> NewOrder(List<CustomerOrder> order)
         {
             return await _customerOrderRepository.NewOrder(order);
         }

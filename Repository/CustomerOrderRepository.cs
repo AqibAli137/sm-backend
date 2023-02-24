@@ -4,7 +4,7 @@ using sm_backend.Repository.Interfaces;
 
 namespace sm_backend.Repository
 {
-    public class CustomerOrderRepository: ICustomerOrderRepository
+    public class CustomerOrderRepository : ICustomerOrderRepository
     {
         private readonly SmContext _dbContext;
 
@@ -23,26 +23,47 @@ namespace sm_backend.Repository
             return await _dbContext.CustomerOrders.Where(s => s.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<CustomerOrder> NewOrder(CustomerOrder order)
+
+        private string RendomNumber()
         {
+             var random = new Random();
+            var value = random.Next();
+            string startTime = "15/04/1999";
+            var againRendom=new Random();
+            var againValue= againRendom.Next();
+            var seconds = (DateTime.Now - DateTime.Parse(startTime)).TotalSeconds;
+            var gatePassNumber = Convert.ToInt32(seconds % 100000000) + value + againValue;
+            return gatePassNumber.ToString();
+        }
+
+        public async Task<CustomerOrder> NewOrder(List<CustomerOrder> orderList)
+        {
+          string rendomNo= RendomNumber();
+
             GatePass gatePass = new GatePass();
-            gatePass.GatePassDate = order.OrderDate;
+            gatePass.GatePassDate = DateTime.UtcNow.ToString();
+            gatePass.GatePassNo=rendomNo;
             _dbContext.GatePass.Add(gatePass);
-            /*_dbContext.CustomerOrders.Add(order)*/
 
-            var gatePassNumber =  _dbContext.GatePass.ToListAsync();
-
-            _dbContext.Add(gatePassNumber);
+            foreach (var order in orderList)
+            {
+            order.GatePassNumber=rendomNo;
+            _dbContext.CustomerOrders.Add(order);
+            }
             await _dbContext.SaveChangesAsync();
-            return order;
+           
+           
+            return orderList[1];
 
         }
+
+        
 
         public async Task<CustomerOrder> PostCustomerOrderAsync(CustomerOrder oder)
         {
             _dbContext.CustomerOrders.Add(oder);
             await _dbContext.SaveChangesAsync();
-            return(oder);
+            return (oder);
         }
 
         public async Task<CustomerOrder> PutCustomerOrderAsync(CustomerOrder order)
@@ -65,4 +86,3 @@ namespace sm_backend.Repository
         }
     }
 }
-    
