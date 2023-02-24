@@ -12,6 +12,6 @@ namespace sm_backend.Models
         public bool IsActive { get; set; }
         public int PaymentRcv { get; set; }
         public int PendingPayment { get; set; }
-        public decimal TotalBill { get; set; }
+        public int TotalBill { get; set; }
     }
 }

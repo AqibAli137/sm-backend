@@ -11,5 +11,7 @@ namespace sm_backend.Models
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
         public string? GatePassDate { get; set; }
+        public string? GatePassNo { get; set; }
+
     }
 }
