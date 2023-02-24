@@ -31,18 +31,19 @@ namespace sm_backend.Repository
 
         public async Task<Item> PutItemAsync(Item item)
         {
-            var itm = _dbContext.Item.Where(x => x.Id == item.Id).FirstOrDefault();
+            var existingItem = _dbContext.Item.Where(x => x.Id == item.Id).FirstOrDefault();
 
-            if (itm != null)
+            if (existingItem != null)
             {
-                itm.ItemName = item.ItemName;
-                itm.CostOfItem = item.CostOfItem;
-                itm.TotalQuantity += item.TotalQuantity;
-                itm.TotalAmount = item.TotalAmount;
-                itm.TypeOfItem = item.TypeOfItem;
+                item.ItemName = item.ItemName;
+                item.CostOfItem = item.CostOfItem;
+                item.TotalQuantity += item.TotalQuantity;
+                item.TotalAmount += item.TotalAmount;
+                item.TypeOfItem = existingItem.TypeOfItem;
+            _dbContext.Item.Add(item);
             }
             await _dbContext.SaveChangesAsync();
-            return itm;
+            return existingItem;
         }
     }
 }
