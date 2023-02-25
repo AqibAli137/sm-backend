@@ -33,7 +33,7 @@ namespace sm_backend.Controllers
         }
 
         [HttpPut]
-        [Route("{id}")]
+        [Route("{SimpleUpdate}")]
         public async Task<Item> PutItemAsync(Item item)
         {
             return await _iItemRepository.PutItemAsync(item);
