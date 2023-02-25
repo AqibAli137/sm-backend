@@ -39,7 +39,6 @@ namespace sm_backend.Controllers
         }
 
         [HttpPut]
-        [Route("{id}")]
         public async Task<CustomerOrder> PutCustomerOderAsync(CustomerOrder order)
         {
             return await _customerOrderRepository.PutCustomerOrderAsync(order);

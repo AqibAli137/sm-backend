@@ -16,10 +16,19 @@ namespace sm_backend.Controllers
             _customerRepository = customerRepository;
         }
 
+
         [HttpGet]
         public async Task<List<Customer>> GetAllCustomer()
         {
             return await _customerRepository.GetAllCustomer();
+        }
+
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<Customer> GetCustomersById(int id)
+        {
+            return await _customerRepository.GetAllCustomerById(id);
         }
 
         [HttpPost]
@@ -34,15 +43,15 @@ namespace sm_backend.Controllers
         }
 
         [HttpPut]
-        [Route("{id}")]
         public async Task<Customer> PutCustomerAsync(Customer item)
         {
             return await _customerRepository.PutCustomerAsync(item);
         }
 
+
         [HttpPut]
         [Route("{id}")]
-        public async Task<Customer> PayementRcvAsync(Customer item)
+        public async Task<Customer> PayementRcvAsync(int id,Customer item)
         {
             return await _customerRepository.PayementRcvAsync(item);
         }

@@ -34,7 +34,6 @@ namespace sm_backend.Controllers
         }
 
         [HttpPut]
-        [Route("{id}")]
         public async Task<GatePass> PutGatePassAsync(GatePass pass)
         {
             return await _gatePassRepository.PutGatePassAsync(pass);

@@ -35,7 +35,6 @@ namespace sm_backend.Controllers
         }
 
         [HttpPut]
-        [Route("{id}")]
         public async Task<Invoice> PutInvoiceAsync(Invoice invoice)
         {
             return await _invoiceRepository.PutInvoiceAsync(invoice);

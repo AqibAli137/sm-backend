@@ -18,7 +18,7 @@ namespace sm_backend.Repository
             return await _dbContext.Customer.ToListAsync();
         }
 
-        public async Task<Customer> GetCustomerAsync(int id)
+        public async Task<Customer> GetAllCustomerById(int id)
         {
             return await _dbContext.Customer.Where(x => x.Id == id).FirstOrDefaultAsync();
         }
