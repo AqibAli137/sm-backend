@@ -8,5 +8,8 @@ namespace sm_backend.Repository.Interfaces
         Task<Item> GetItemAsync(int id);
         Task<Item> PostItemAsync(Item item);
         Task<Item> PutItemAsync(Item item);
+
+        Task<Item> StockAddAsync(Item item);
+
     }
 }

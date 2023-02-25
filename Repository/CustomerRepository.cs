@@ -42,6 +42,25 @@ namespace sm_backend.Repository
                 cust.PaymentRcv = customer.PaymentRcv;
                 cust.PendingPayment = customer.PendingPayment;
                 cust.TotalBill = customer.TotalBill;
+                cust.Discount=customer.Discount;
+            }
+            await _dbContext.SaveChangesAsync();        
+            return customer;
+        }
+
+        public async Task<Customer> PayementRcvAsync(Customer customer)
+        {
+            var cust = _dbContext.Customer.Where(x => x.Id == customer.Id).FirstOrDefault();
+            if (cust != null)
+            {
+                // cust.Name = customer.Name;
+                // cust.Address = customer.Address;
+                // cust.PhoneNo = customer.PhoneNo;
+                // cust.IsActive = customer.IsActive;
+                cust.PaymentRcv += customer.PaymentRcv;
+                cust.PendingPayment -= (customer.PaymentRcv + customer.Discount);
+                // cust.TotalBill = customer.TotalBill;
+                cust.Discount += customer.Discount;
             }
             await _dbContext.SaveChangesAsync();        
             return customer;

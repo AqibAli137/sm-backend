@@ -39,5 +39,12 @@ namespace sm_backend.Controllers
         {
             return await _customerRepository.PutCustomerAsync(item);
         }
+
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<Customer> PayementRcvAsync(Customer item)
+        {
+            return await _customerRepository.PayementRcvAsync(item);
+        }
     }
 }

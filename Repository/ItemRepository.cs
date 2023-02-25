@@ -4,7 +4,7 @@ using sm_backend.Repository.Interfaces;
 
 namespace sm_backend.Repository
 {
-    public class ItemRepository: IItemRepository
+    public class ItemRepository : IItemRepository
     {
         private readonly SmContext _dbContext;
         public ItemRepository(SmContext dbContext)
@@ -40,7 +40,28 @@ namespace sm_backend.Repository
                 item.TotalQuantity += item.TotalQuantity;
                 item.TotalAmount += item.TotalAmount;
                 item.TypeOfItem = existingItem.TypeOfItem;
-            _dbContext.Item.Add(item);
+                _dbContext.Item.Add(item);
+            }
+            await _dbContext.SaveChangesAsync();
+            return existingItem;
+        }
+        public async Task<Item> StockAddAsync(Item item)
+        {
+            var existingItem = _dbContext.Item.Where(x => x.Id == item.Id).FirstOrDefault();
+
+            if (existingItem != null)
+            {
+                var newStockAmount= item.CostOfItem * item.TotalQuantity;
+                var amount=item.TotalAmount + newStockAmount;
+                var quantity=item.TotalQuantity + existingItem.TotalQuantity;
+
+                // item.ItemName = item.ItemName;
+                item.CostOfItem = item.CostOfItem;
+                item.RealItemCost = amount/quantity;
+                item.TotalQuantity += item.TotalQuantity;
+                item.TotalAmount += newStockAmount;
+                item.TypeOfItem = existingItem.TypeOfItem;
+                _dbContext.Item.Add(item);
             }
             await _dbContext.SaveChangesAsync();
             return existingItem;

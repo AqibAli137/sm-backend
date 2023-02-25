@@ -39,5 +39,12 @@ namespace sm_backend.Controllers
             return await _iItemRepository.PutItemAsync(item);
         }
 
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<Item> StockAddAsync(Item item)
+        {
+            return await _iItemRepository.StockAddAsync(item);
+        }
+
     }
 }

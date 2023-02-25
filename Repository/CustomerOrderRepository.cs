@@ -62,11 +62,18 @@ namespace sm_backend.Repository
             foreach (var order in orderList)
             {
                 order.GatePassNumber = rendomNo;
-               Item itemRecord =await _dbContext.Item.Where(s => s.Id == order.ItemId).FirstOrDefaultAsync();
+               Item itemRecord = await _dbContext.Item.Where(s => s.Id == order.ItemId).FirstOrDefaultAsync();
                Customer customerRecord=await  _dbContext.Customer.Where(s => s.Id == order.CustomerId).FirstOrDefaultAsync();
 
+               var realCostOfOrder= itemRecord.RealItemCost * order.ItemQuantity;
+               var realProfit=order.Yourbill - realCostOfOrder;
+
                order.ItemName=itemRecord.ItemName;
-               order.OrderDate=DateTime.UtcNow.ToString();
+            //    order.OrderDate=DateTime.UtcNow.ToString();
+               order.OrderDate=order.OrderDate;
+               order.Profit=itemRecord.RealItemCost;
+
+               
                 _dbContext.CustomerOrders.Add(order);
 
 

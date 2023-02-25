@@ -13,5 +13,8 @@ namespace sm_backend.Models
         public decimal PaymentRcv { get; set; }
         public decimal PendingPayment { get; set; }
         public decimal TotalBill { get; set; }
+
+        public decimal Discount { get; set; }
+
     }
 }
