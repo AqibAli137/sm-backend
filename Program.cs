@@ -16,6 +16,25 @@ builder.Services.AddDbContext<SmContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection"));
 });
 
+
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddScoped(sp => sp.GetService<IHttpContextAccessor>().HttpContext.Session);
+
+builder.Services.AddSignalR();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Client", policy =>
+    {
+        policy.AllowAnyHeader()
+            .AllowAnyMethod()
+            .WithOrigins("http://localhost:3000")
+            .AllowCredentials();
+    });
+});
+
+
 // Repository Dependencies
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
@@ -32,7 +51,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+
+
 app.UseHttpsRedirection();
+
+app.UseRouting();
 
 app.UseAuthorization();
 

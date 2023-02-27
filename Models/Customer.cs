@@ -16,5 +16,8 @@ namespace sm_backend.Models
 
         public decimal Discount { get; set; }
 
+        public decimal ProfitFromCustomer { get; set; }
+
+
     }
 }
