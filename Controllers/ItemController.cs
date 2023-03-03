@@ -32,14 +32,13 @@ namespace sm_backend.Controllers
             return Ok(itm);
         }
 
-        [HttpPut]
-        public async Task<Item> PutItemAsync(Item item)
-        {
-            return await _iItemRepository.PutItemAsync(item);
-        }
+        // [HttpPut]
+        // public async Task<Item> PutItemAsync(Item item)
+        // {
+        //     return await _iItemRepository.PutItemAsync(item);
+        // }
 
         [HttpPut]
-        [Route("{StockAdd}")]
         public async Task<Item> StockAddAsync(Item item)
         {
             return await _iItemRepository.StockAddAsync(item);

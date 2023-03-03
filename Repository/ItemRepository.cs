@@ -24,6 +24,8 @@ namespace sm_backend.Repository
 
         public async Task<Item> PostItemAsync(Item item)
         {
+            var ItemTotalCost=item.CostOfItem * item.TotalQuantity;
+            item.TotalAmount= ItemTotalCost;
             _dbContext.Item.Add(item);
             await _dbContext.SaveChangesAsync();
             return item;
@@ -47,23 +49,24 @@ namespace sm_backend.Repository
         }
         public async Task<Item> StockAddAsync(Item item)
         {
-            var existingItem = _dbContext.Item.Where(x => x.Id == item.Id).FirstOrDefault();
+            var existingItem =await _dbContext.Item.FirstOrDefaultAsync(x => x.Id == item.Id);
 
             if (existingItem != null)
             {
                 var newStockAmount= item.CostOfItem * item.TotalQuantity;
-                var amount=item.TotalAmount + newStockAmount;
+
+                var amount=existingItem.TotalAmount + newStockAmount;
                 var quantity=item.TotalQuantity + existingItem.TotalQuantity;
 
-                // item.ItemName = item.ItemName;
-                item.CostOfItem = item.CostOfItem;
-                item.RealItemCost = amount/quantity;
-                item.TotalQuantity += item.TotalQuantity;
-                item.TotalAmount += newStockAmount;
-                item.TypeOfItem = existingItem.TypeOfItem;
-                _dbContext.Item.Add(item);
-            }
+                existingItem.ItemName = existingItem.ItemName;
+                existingItem.CostOfItem = item.CostOfItem;
+                existingItem.RealItemCost = amount/quantity;
+                existingItem.TotalQuantity += item.TotalQuantity;
+                existingItem.TotalAmount += newStockAmount;
+                existingItem.TypeOfItem = existingItem.TypeOfItem;
+                // _dbContext.Item.Add(item);
             await _dbContext.SaveChangesAsync();
+            }
             return existingItem;
         }
     }
