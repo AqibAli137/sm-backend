@@ -27,7 +27,7 @@ namespace sm_backend.Repository
         private string RendomNumber()
         {
             var random = new Random();
-            var value = random.Next(1,999999);
+            var value = random.Next(1, 999999);
             string startTime = "4/15/1999";
             var againValue = random.Next(4000, 1000000);
             var seconds = (DateTime.Now - DateTime.Parse(startTime)).TotalSeconds;
@@ -49,12 +49,12 @@ namespace sm_backend.Repository
         //     return Customerrecord;
         // }
 
-        public async Task<CustomerOrder> NewOrder(int customerId,List<CustomerOrder> orderList)
+        public async Task<CustomerOrder> NewOrder(int customerId, List<CustomerOrder> orderList)
         {
             string rendomNo = RendomNumber();
 
             GatePass gatePass = new GatePass();
-            gatePass.CustomerId= customerId;
+            gatePass.CustomerId = customerId;
             gatePass.GatePassDate = DateTime.UtcNow.ToString();
             gatePass.GatePassNo = rendomNo;
             _dbContext.GatePass.Add(gatePass);
@@ -62,25 +62,32 @@ namespace sm_backend.Repository
             foreach (var order in orderList)
             {
                 order.GatePassNumber = rendomNo;
-               Item itemRecord = await _dbContext.Item.Where(s => s.Id == order.ItemId).FirstOrDefaultAsync();
-               Customer customerRecord=await  _dbContext.Customer.Where(s => s.Id == order.CustomerId).FirstOrDefaultAsync();
+                Item itemRecord = await _dbContext.Item.Where(s => s.Id == order.ItemId).FirstOrDefaultAsync();
+                Customer customerRecord = await _dbContext.Customer.Where(s => s.Id == order.CustomerId).FirstOrDefaultAsync();
 
-               var realCostOfOrder= itemRecord.RealItemCost * order.ItemQuantity;
-               var realProfit=order.Yourbill - realCostOfOrder;
+                var realCostOfOrder = itemRecord.RealItemCost * order.ItemQuantity;
+                var realProfit = order.Yourbill - realCostOfOrder;
+                //    var AmountOfSale = realCostOfOrder * order.ItemQuantity;
 
-               order.ItemName=itemRecord.ItemName;
-            //    order.OrderDate=DateTime.UtcNow.ToString();
-               order.OrderDate=order.OrderDate;
-               order.Profit=itemRecord.RealItemCost;
+                var fakeCostOfOrder = order.ItemQuantity * order.SetPrice;
 
-               
+
+
+                order.ItemName = itemRecord.ItemName;
+                //    order.OrderDate=DateTime.UtcNow.ToString();
+                order.OrderDate = order.OrderDate;
+                order.Profit = itemRecord.RealItemCost;
+
+
                 _dbContext.CustomerOrders.Add(order);
 
 
-               itemRecord.TotalQuantity -= order.ItemQuantity;
+                itemRecord.TotalQuantity = itemRecord.TotalQuantity - order.ItemQuantity;
+                itemRecord.TotalAmount = itemRecord.TotalAmount - realCostOfOrder;
 
 
-               customerRecord.TotalBill += order.Yourbill;
+                customerRecord.TotalBill += fakeCostOfOrder;
+                customerRecord.PendingPayment += fakeCostOfOrder;
             }
 
             await _dbContext.SaveChangesAsync();

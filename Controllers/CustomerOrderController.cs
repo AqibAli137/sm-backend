@@ -38,15 +38,15 @@ namespace sm_backend.Controllers
             }
         }
 
-        [HttpPut]
-        public async Task<CustomerOrder> PutCustomerOderAsync(CustomerOrder order)
-        {
-            return await _customerOrderRepository.PutCustomerOrderAsync(order);
-        }
+        // [HttpPut]
+        // public async Task<CustomerOrder> PutCustomerOderAsync(CustomerOrder order)
+        // {
+        //     return await _customerOrderRepository.PutCustomerOrderAsync(order);
+        // }
 
 
         [HttpPost]
-        [Route("NewOrder")]
+        [Route("NewOrder/{customerId:int}")]
         public async Task<CustomerOrder> NewOrder(int customerId, List<CustomerOrder> order)
         {
             return await _customerOrderRepository.NewOrder(customerId,order);
