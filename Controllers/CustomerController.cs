@@ -50,8 +50,8 @@ namespace sm_backend.Controllers
 
 
         [HttpPut]
-        [Route("{id}")]
-        public async Task<Customer> PayementRcvAsync(int id,Customer item)
+        [Route("PayementRcv")]
+        public async Task<Customer> PayementRcvAsync(Customer item)
         {
             return await _customerRepository.PayementRcvAsync(item);
         }

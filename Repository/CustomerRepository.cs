@@ -51,6 +51,7 @@ namespace sm_backend.Repository
         public async Task<Customer> PayementRcvAsync(Customer customer)
         {
             var cust = _dbContext.Customer.Where(x => x.Id == customer.Id).FirstOrDefault();
+            var totalPay=customer.PaymentRcv + customer.Discount;
             if (cust != null)
             {
                 // cust.Name = customer.Name;
@@ -58,7 +59,7 @@ namespace sm_backend.Repository
                 // cust.PhoneNo = customer.PhoneNo;
                 // cust.IsActive = customer.IsActive;
                 cust.PaymentRcv += customer.PaymentRcv;
-                cust.PendingPayment -= (customer.PaymentRcv + customer.Discount);
+                cust.PendingPayment -= totalPay;
                 // cust.TotalBill = customer.TotalBill;
                 cust.Discount += customer.Discount;
             }
