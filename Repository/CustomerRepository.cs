@@ -61,6 +61,7 @@ namespace sm_backend.Repository
                 cust.PaymentRcv += customer.PaymentRcv;
                 cust.PendingPayment -= totalPay;
                 // cust.TotalBill = customer.TotalBill;
+                cust.ProfitFromCustomer -= customer.Discount;
                 cust.Discount += customer.Discount;
             }
             await _dbContext.SaveChangesAsync();        

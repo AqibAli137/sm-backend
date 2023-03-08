@@ -66,17 +66,20 @@ namespace sm_backend.Repository
                 Customer customerRecord = await _dbContext.Customer.Where(s => s.Id == order.CustomerId).FirstOrDefaultAsync();
 
                 var realCostOfOrder = itemRecord.RealItemCost * order.ItemQuantity;
-                var realProfit = order.Yourbill - realCostOfOrder;
+                var fakeCostOfOrder = order.ItemQuantity * order.SetPrice;
+
+                var realProfit = fakeCostOfOrder - realCostOfOrder;
                 //    var AmountOfSale = realCostOfOrder * order.ItemQuantity;
 
-                var fakeCostOfOrder = order.ItemQuantity * order.SetPrice;
 
 
 
                 order.ItemName = itemRecord.ItemName;
                 //    order.OrderDate=DateTime.UtcNow.ToString();
                 order.OrderDate = order.OrderDate;
-                order.Profit = itemRecord.RealItemCost;
+                // order.Profit = itemRecord.RealItemCost;
+                order.Profit = realProfit;
+
 
 
                 _dbContext.CustomerOrders.Add(order);
@@ -88,6 +91,7 @@ namespace sm_backend.Repository
 
                 customerRecord.TotalBill += fakeCostOfOrder;
                 customerRecord.PendingPayment += fakeCostOfOrder;
+                customerRecord.ProfitFromCustomer += realProfit;
             }
 
             await _dbContext.SaveChangesAsync();

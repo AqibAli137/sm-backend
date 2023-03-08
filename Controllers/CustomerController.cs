@@ -35,10 +35,10 @@ namespace sm_backend.Controllers
         public async Task<IActionResult> PostCustomerAsync(Customer item)
         {
             Customer itm = await _customerRepository.PostCustomerAsync(item);
-            if (itm == null)
-            {
-                return BadRequest("No Item Found");
-            }
+            // if (itm == null)
+            // {
+            //     return BadRequest("No Item Found");
+            // }
             return Ok(itm);
         }
 

@@ -40,7 +40,7 @@ namespace sm_backend.Repository
 
             //for Customer return price less from his total price
             var customerReturnPrice = returnItem.ReturnQuantity * lastOrder.SetPrice;
-            var returnDiscountPrice = customerReturnPrice - realCostOfOrder;
+            var returnProfitPrice = customerReturnPrice - realCostOfOrder;
 
             itemRecord.TotalQuantity += returnItem.ReturnQuantity;
             itemRecord.TotalAmount += realCostOfOrder;
@@ -48,7 +48,7 @@ namespace sm_backend.Repository
 
             customerRecord.TotalBill -= customerReturnPrice;
             customerRecord.PendingPayment -= customerReturnPrice;
-            customerRecord.Discount -= returnDiscountPrice;
+            customerRecord.ProfitFromCustomer -= returnProfitPrice;
 
 
 
