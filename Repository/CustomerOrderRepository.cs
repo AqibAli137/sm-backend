@@ -17,7 +17,35 @@ namespace sm_backend.Repository
         {
             return await _dbContext.CustomerOrders.ToListAsync();
         }
+        public async Task<List<ItemProfit>> ItemProfit()
+        {
+            List<Item> itemRecord = await _dbContext.Item.ToListAsync();
 
+            List<CustomerOrder> customerOrders = await _dbContext.CustomerOrders.ToListAsync();
+
+            List<ItemProfit> Listobj = new List<ItemProfit>();
+
+
+
+            foreach (var item in itemRecord)
+            {
+            ItemProfit obj = new ItemProfit();
+                decimal Totalprofit = 0;
+                foreach (var order in customerOrders)
+                {
+                    if (item.Id == order.ItemId)
+                    {
+                        Totalprofit += order.Profit;
+                    }
+                    obj.ItemId = item.Id;
+                    obj.Profit = Totalprofit;
+                }
+
+                Listobj.Add(obj);
+
+            }
+            return Listobj;
+        }
         public async Task<CustomerOrder> GetCustomerOrderAsync(int id)
         {
             return await _dbContext.CustomerOrders.Where(s => s.Id == id).FirstOrDefaultAsync();

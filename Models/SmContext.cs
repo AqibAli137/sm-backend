@@ -15,6 +15,8 @@ namespace sm_backend.Models
         public DbSet<Item> Item { get; set; }
         public DbSet<GatePass> GatePass { get; set; }
         public DbSet<ReturnItem> ReturnItem { get; set; }
+        public DbSet<ItemProfit> ItemProfit { get; set; }
+
 
     }
 }

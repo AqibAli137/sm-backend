@@ -51,5 +51,13 @@ namespace sm_backend.Controllers
         {
             return await _customerOrderRepository.NewOrder(customerId,order);
         }
+
+
+        [HttpGet]
+        [Route("ItemProfit")]
+        public async Task<List<ItemProfit>> ItemProfit()
+        {
+            return await _customerOrderRepository.ItemProfit();
+        }
     }
 }
