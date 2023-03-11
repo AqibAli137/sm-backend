@@ -16,7 +16,7 @@ namespace sm_backend.Models
         public decimal Yourbill { get; set; }
         public string? GatePassNumber { get; set; }
         public decimal Profit { get; set; }
-        public DateTime  SecondOrderDate { get; set; }=DateTime.Today;
+        public DateTime  SecondOrderDate { get; set; }=DateTime.Now;
 
     }
 }

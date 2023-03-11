@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Configuration;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using sm_backend.Models;
 using sm_backend.Repository.Interfaces;
+
 
 namespace sm_backend.Repository
 {
@@ -11,6 +14,7 @@ namespace sm_backend.Repository
         {
             _dbContext = dbContext;
         }
+
 
         public async Task<List<Item>> GetAllItemAsync()
         {
@@ -33,24 +37,29 @@ namespace sm_backend.Repository
 
         public async Task<List<Item>> StockWithDate(StockWithDate dates)
         {
-            string sql = $"SELECT * FROM CustomerOrders WHERE SecondOrderDate BETWEEN {dates.DateFrom} AND {dates.DateTo}";
 
-            List<CustomerOrder> orders = await _dbContext.CustomerOrders.FromSqlRaw(sql).ToListAsync();
+            List<CustomerOrder> orders = await _dbContext.CustomerOrders.ToListAsync();
             List<Item> items = await _dbContext.Item.ToListAsync();
-
-
             List<Item> ItemList = new List<Item>();
+            List<CustomerOrder> co = new List<CustomerOrder>();
+
+            DateTime startAt = DateTime.Parse(dates.DateFrom);
+            DateTime endAt = DateTime.Parse(dates.DateTo);
+
+
+            List<CustomerOrder> filteredList = orders.Where(obj => obj.SecondOrderDate >= startAt && obj.SecondOrderDate < endAt).ToList();
+
 
 
             foreach (var item in items)
             {
-                decimal quantity=0;
-                decimal sale=0;
-                decimal profit=0;
-                decimal price=0;
+                decimal quantity = 0;
+                decimal sale = 0;
+                decimal profit = 0;
+                // decimal avgPriceSet = 0;
 
                 Item itemObj = new Item();
-                foreach (var order in orders)
+                foreach (var order in filteredList)
                 {
                     if (order.ItemId == item.Id)
                     {
@@ -61,15 +70,15 @@ namespace sm_backend.Repository
                     }
                 }
 
-                itemObj.ItemName=item.ItemName;
-                itemObj.TotalAmount=sale;
-                itemObj.TotalQuantity=quantity;
-                //profit
-                itemObj.CostOfItem=profit;
+                itemObj.ItemName = item.ItemName;
+                itemObj.TotalAmount = sale;
+                itemObj.TotalQuantity = quantity;
+                itemObj.TypeOfItem = item.TypeOfItem;
+                itemObj.CostOfItem = profit;
 
                 ItemList.Add(itemObj);
             }
-            
+
             return ItemList;
 
         }
