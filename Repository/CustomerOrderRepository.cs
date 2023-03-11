@@ -29,7 +29,7 @@ namespace sm_backend.Repository
 
             foreach (var item in itemRecord)
             {
-            ItemProfit obj = new ItemProfit();
+                ItemProfit obj = new ItemProfit();
                 decimal Totalprofit = 0;
                 foreach (var order in customerOrders)
                 {
@@ -63,20 +63,6 @@ namespace sm_backend.Repository
             return gatePassNumber.ToString();
         }
 
-        // private async Task<Item> getItemRecord(int itemId)
-        // {
-        //     var Itemrecord = await _dbContext.Item.Where(s => s.Id == itemId).FirstOrDefaultAsync();
-
-        //     return Itemrecord;
-        // }
-
-        // private async Task<Customer> getCustomerRecord(int CustomerId)
-        // {
-        //     var Customerrecord = await _dbContext.Customer.Where(s => s.Id == CustomerId).FirstOrDefaultAsync();
-
-        //     return Customerrecord;
-        // }
-
         public async Task<CustomerOrder> NewOrder(int customerId, List<CustomerOrder> orderList)
         {
             string rendomNo = RendomNumber();
@@ -97,21 +83,13 @@ namespace sm_backend.Repository
                 var fakeCostOfOrder = order.ItemQuantity * order.SetPrice;
 
                 var realProfit = fakeCostOfOrder - realCostOfOrder;
-                //    var AmountOfSale = realCostOfOrder * order.ItemQuantity;
-
-
-
-
                 order.ItemName = itemRecord.ItemName;
                 //    order.OrderDate=DateTime.UtcNow.ToString();
                 order.OrderDate = order.OrderDate;
                 // order.Profit = itemRecord.RealItemCost;
                 order.Profit = realProfit;
 
-
-
                 _dbContext.CustomerOrders.Add(order);
-
 
                 itemRecord.TotalQuantity = itemRecord.TotalQuantity - order.ItemQuantity;
                 itemRecord.TotalAmount = itemRecord.TotalAmount - realCostOfOrder;

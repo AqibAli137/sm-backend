@@ -25,18 +25,20 @@ namespace sm_backend.Controllers
         public async Task<IActionResult> PostItemAsync(Item item)
         {
             Item itm = await _iItemRepository.PostItemAsync(item);
-            if(itm== null) 
+            if (itm == null)
             {
                 return BadRequest("No Item Found");
             }
             return Ok(itm);
         }
 
-        // [HttpPut]
-        // public async Task<Item> PutItemAsync(Item item)
-        // {
-        //     return await _iItemRepository.PutItemAsync(item);
-        // }
+        [HttpPost]
+        [Route("FilterWithDate")]
+        public async Task<List<Item>> StockWithDate(StockWithDate dates)
+        {
+
+            return await _iItemRepository.StockWithDate(dates);
+        }
 
         [HttpPut]
         public async Task<Item> StockAddAsync(Item item)

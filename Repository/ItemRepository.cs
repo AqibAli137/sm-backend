@@ -24,11 +24,54 @@ namespace sm_backend.Repository
 
         public async Task<Item> PostItemAsync(Item item)
         {
-            var ItemTotalCost=item.CostOfItem * item.TotalQuantity;
-            item.TotalAmount= ItemTotalCost;
+            var ItemTotalCost = item.CostOfItem * item.TotalQuantity;
+            item.TotalAmount = ItemTotalCost;
             _dbContext.Item.Add(item);
             await _dbContext.SaveChangesAsync();
             return item;
+        }
+
+        public async Task<List<Item>> StockWithDate(StockWithDate dates)
+        {
+            string sql = $"SELECT * FROM CustomerOrders WHERE SecondOrderDate BETWEEN {dates.DateFrom} AND {dates.DateTo}";
+
+            List<CustomerOrder> orders = await _dbContext.CustomerOrders.FromSqlRaw(sql).ToListAsync();
+            List<Item> items = await _dbContext.Item.ToListAsync();
+
+
+            List<Item> ItemList = new List<Item>();
+
+
+            foreach (var item in items)
+            {
+                decimal quantity=0;
+                decimal sale=0;
+                decimal profit=0;
+                decimal price=0;
+
+                Item itemObj = new Item();
+                foreach (var order in orders)
+                {
+                    if (order.ItemId == item.Id)
+                    {
+                        quantity += order.ItemQuantity;
+                        sale += order.Yourbill;
+                        // sale += order.SetPrice;
+                        profit += order.Profit;
+                    }
+                }
+
+                itemObj.ItemName=item.ItemName;
+                itemObj.TotalAmount=sale;
+                itemObj.TotalQuantity=quantity;
+                //profit
+                itemObj.CostOfItem=profit;
+
+                ItemList.Add(itemObj);
+            }
+            
+            return ItemList;
+
         }
 
         public async Task<Item> PutItemAsync(Item item)
@@ -49,23 +92,23 @@ namespace sm_backend.Repository
         }
         public async Task<Item> StockAddAsync(Item item)
         {
-            var existingItem =await _dbContext.Item.FirstOrDefaultAsync(x => x.Id == item.Id);
+            var existingItem = await _dbContext.Item.FirstOrDefaultAsync(x => x.Id == item.Id);
 
             if (existingItem != null)
             {
-                var newStockAmount= item.CostOfItem * item.TotalQuantity;
+                var newStockAmount = item.CostOfItem * item.TotalQuantity;
 
-                var amount=existingItem.TotalAmount + newStockAmount;
-                var quantity=item.TotalQuantity + existingItem.TotalQuantity;
+                var amount = existingItem.TotalAmount + newStockAmount;
+                var quantity = item.TotalQuantity + existingItem.TotalQuantity;
 
                 existingItem.ItemName = existingItem.ItemName;
                 existingItem.CostOfItem = item.CostOfItem;
-                existingItem.RealItemCost = amount/quantity;
+                existingItem.RealItemCost = amount / quantity;
                 existingItem.TotalQuantity += item.TotalQuantity;
                 existingItem.TotalAmount += newStockAmount;
                 existingItem.TypeOfItem = existingItem.TypeOfItem;
                 // _dbContext.Item.Add(item);
-            await _dbContext.SaveChangesAsync();
+                await _dbContext.SaveChangesAsync();
             }
             return existingItem;
         }
