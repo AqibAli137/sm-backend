@@ -8,7 +8,7 @@ namespace sm_backend.Repository.Interfaces
         Task<Item> GetItemAsync(int id);
         Task<Item> PostItemAsync(Item item);
         Task<Item> PutItemAsync(Item item);
-        Task<List<Item>> StockWithDate(StockWithDate dates);
+        Task<MixReturn> StockWithDate(StockWithDate dates);
 
         Task<Item> StockAddAsync(Item item);
 

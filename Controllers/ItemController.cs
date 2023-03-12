@@ -34,7 +34,7 @@ namespace sm_backend.Controllers
 
         [HttpPost]
         [Route("FilterWithDate")]
-        public async Task<List<Item>> StockWithDate(StockWithDate dates)
+        public async Task<MixReturn> StockWithDate(StockWithDate dates)
         {
 
             return await _iItemRepository.StockWithDate(dates);

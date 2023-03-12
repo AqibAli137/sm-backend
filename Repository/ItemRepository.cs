@@ -35,8 +35,17 @@ namespace sm_backend.Repository
             return item;
         }
 
-        public async Task<List<Item>> StockWithDate(StockWithDate dates)
+        // public class MixReturn
+        // {
+
+        //     public List<Item> ListItem { get; set; }
+        //     public decimal TotalQuantity { get; set; }
+        //     public decimal TotalProfit { get; set; }
+        // }
+
+        public async Task<MixReturn> StockWithDate(StockWithDate dates)
         {
+
 
             List<CustomerOrder> orders = await _dbContext.CustomerOrders.ToListAsync();
             List<Item> items = await _dbContext.Item.ToListAsync();
@@ -49,13 +58,14 @@ namespace sm_backend.Repository
 
             List<CustomerOrder> filteredList = orders.Where(obj => obj.SecondOrderDate >= startAt && obj.SecondOrderDate < endAt).ToList();
 
-
+            decimal TotalSale = 0;
+            decimal TotalProfit = 0;
 
             foreach (var item in items)
             {
                 decimal quantity = 0;
-                decimal sale = 0;
                 decimal profit = 0;
+                decimal sale = 0;
                 // decimal avgPriceSet = 0;
 
                 Item itemObj = new Item();
@@ -69,6 +79,8 @@ namespace sm_backend.Repository
                         profit += order.Profit;
                     }
                 }
+                TotalProfit += profit;
+                TotalSale += sale;
 
                 itemObj.ItemName = item.ItemName;
                 itemObj.TotalAmount = sale;
@@ -79,8 +91,14 @@ namespace sm_backend.Repository
                 ItemList.Add(itemObj);
             }
 
-            return ItemList;
+            MixReturn mixReturn = new MixReturn();
 
+            mixReturn.ListItem = ItemList;
+            mixReturn.TotalSale = TotalSale;
+            mixReturn.TotalProfit = TotalProfit;
+
+
+            return mixReturn;
         }
 
         public async Task<Item> PutItemAsync(Item item)
