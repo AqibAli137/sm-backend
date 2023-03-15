@@ -55,5 +55,19 @@ namespace sm_backend.Controllers
         {
             return await _customerRepository.PayementRcvAsync(item);
         }
+
+        [HttpGet]
+        [Route("Payement")]
+        public async Task<List<PayementRecord>> CustomerPayement()
+        {
+            return await _customerRepository.CustomerPayement();
+        }
+
+         [HttpGet]
+        [Route("PayementById")]
+        public async Task<List<PayementRecord>> CustomerPayementById(int customerId)
+        {
+            return await _customerRepository.CustomerPayementById(customerId);
+        }
     }
 }

@@ -18,5 +18,9 @@ namespace sm_backend.Models
         public DbSet<ItemProfit> ItemProfit { get; set; }
 
 
+        public DbSet<PayementRecord> PayementRecord { get; set; }
+
+
+
     }
 }

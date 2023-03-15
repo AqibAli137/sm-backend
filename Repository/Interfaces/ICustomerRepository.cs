@@ -9,6 +9,10 @@ namespace sm_backend.Repository.Interfaces
         Task<Customer> PostCustomerAsync(Customer item);
         Task<Customer> PutCustomerAsync(Customer item);
         Task<Customer> PayementRcvAsync(Customer item);
+        Task<List<PayementRecord>> CustomerPayement();
+
+        Task<List<PayementRecord>> CustomerPayementById(int id);
+
     
     }
 }
