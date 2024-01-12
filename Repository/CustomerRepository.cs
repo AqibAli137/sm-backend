@@ -64,9 +64,7 @@ namespace sm_backend.Repository
                 // cust.TotalBill = customer.TotalBill;
                 cust.ProfitFromCustomer -= customer.Discount;
                 cust.Discount += customer.Discount;
-
-
-                PR.CustomerId = customer.Id;
+                PR.CustomerId = cust.Id;
                 PR.PayementDate = DateTime.UtcNow.ToString();
                 PR.PayementRcv = customer.PaymentRcv;
                 PR.Discount = customer.Discount;
